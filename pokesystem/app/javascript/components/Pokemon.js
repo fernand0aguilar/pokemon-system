@@ -2,11 +2,14 @@ import React from "react"
 import PropTypes from "prop-types"
 
 
-
 class Pokemon extends React.Component {
   render() {
-    const {pokemons} = this.props;
-    const pokemonList = pokemons;
+    return (
+      <React.Fragment>
+        Name: {this.props.name}
+        Url: {this.props.url}
+      </React.Fragment>
+    );
   }
 }
 
