@@ -1,39 +1,21 @@
 import { createStore, applyMiddleware } from "redux";
 import thunk from 'redux-thunk';
+import rootReducer from './reducers';
 
 const initialState = {
     pokemons: [
         {
-            id: 1,
-            name: "Ditto",
-            url: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/132.png"
-        },
-        {
-            id: 2,
-            name: "pikachu",
-            url:"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"
+            id: 0,
+            name: "test",
+            url: "123"
         }
     ]
-};
-
-const initialStateEmpty = {
-        pokemons: []
-};
-
-function rootReducer(state, action) {
-    console.log(action.type);
-    switch(action.type) {
-        case "GET_POKEMONS_SUCCESS":
-            return { pokemons: action.json.pokemons };
-    }
-    return state;
 }
-
 
 export default function configureStore() {
     const store = createStore(
         rootReducer, 
-        initialStateEmpty,
+        initialState, 
         applyMiddleware(thunk)
     );
     return store;

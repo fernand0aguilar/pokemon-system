@@ -2,17 +2,16 @@ import React, {Component} from 'react';
 
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-
-const GET_POKEMONS_REQUEST = 'GET_POKEMONS_REQUEST';
-const GET_POKEMONS_SUCCESS = 'GET_POKEMONS_SUCCESS';
+import { getPokemons } from '../actions'
 
 class PokedexPage extends Component {
     render() {
         const { pokemons } = this.props;
+
         const pokemonsList = pokemons.map((pokemon) => {
             return <li key={pokemon.id}>* {pokemon.name} {pokemon.url}</li>
         });
-        
+                
         return (
         <React.Fragment>
             Greeting: {this.props.greeting}
@@ -24,26 +23,6 @@ class PokedexPage extends Component {
         </React.Fragment>);
     }
 }
-
-function getPokemons() {
-    console.log('getPokemons() Action!');
-    return dispatch => {
-      dispatch({
-           type: GET_POKEMONS_REQUEST
-      });
-        return fetch(`v1/pokemons.json`)
-        .then(response => response.json())
-        .then(json => dispatch(getPokemonsSuccess(json)))
-        .catch(error => console.log(error));
-    };
-};
-
-export function getPokemonsSuccess(json) {
-    return {
-        type: GET_POKEMONS_SUCCESS,
-        json
-    };
-};
 
 const structuredSelector = createStructuredSelector({
     pokemons: state => state.pokemons,
