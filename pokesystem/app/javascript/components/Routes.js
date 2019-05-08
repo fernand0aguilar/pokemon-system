@@ -8,8 +8,8 @@ import PokemonPage from '../containers/PokemonPage';
 const Routes = () => (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" render={() => ("Hello")} />
-        <Route path="/pokemon" component={PokedexPage}></Route>
+        <Route exact path="/" render={() => ("Home")} />
+        <Route path="/pokemon" render={() => <PokedexPage greeting="Hello <3 " />}></Route>
       </Switch>
     </BrowserRouter>
 );
