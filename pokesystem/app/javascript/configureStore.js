@@ -1,17 +1,9 @@
-import { createStore, applyMiddleware } from "redux";
+import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from './reducers';
-
 const initialState = {
-    pokemons: [
-        {
-            id: 0,
-            name: "test",
-            url: "123"
-        }
-    ]
+    pokemons: []
 }
-
 export default function configureStore() {
     const store = createStore(
         rootReducer, 

@@ -1,17 +1,16 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import {Switch, Route } from 'react-router-dom';
 
 import PokedexPage from '../containers/PokedexPage';
 import PokemonPage from '../containers/PokemonPage';
-
+import NotFound from '../components/NotFound';
 
 const Routes = () => (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" render={() => ("Home")} />
-        <Route path="/pokemon" render={() => <PokedexPage greeting="Hello <3 " />}></Route>
-      </Switch>
-    </BrowserRouter>
+    <Switch>
+      <Route exact path="/" render={() => <PokedexPage greeting="Hello <3 "></PokedexPage>}></Route>
+      <Route exact path="/pokemons/:id" component={PokemonPage}/>
+      <Route path="*" component={NotFound}/>
+    </Switch>
 );
 
 export default Routes;

@@ -1,5 +1,6 @@
 import React from "react";
 import { Provider } from "react-redux"
+import { BrowserRouter } from "react-router-dom"
 
 import Header from "./Header";
 import Footer from "./Footer";
@@ -13,11 +14,13 @@ class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <Header />
-        <main id="app">
-          <Routes />
-        </main>
-        <Footer />
+        <BrowserRouter>
+          <Header />
+          <main id="app">
+            <Routes />
+          </main>
+          <Footer />
+        </BrowserRouter>
       </Provider>
       );
   }

@@ -11,6 +11,11 @@ class V1::PokemonsController < ApplicationController
                 :id => 2,
                 :name => 'pikachu',
                 :url => 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png'
+                },
+                {
+                :id => 3,
+                :name => 'charmander',
+                :url => 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/4.png'
                 }
             ]
         }

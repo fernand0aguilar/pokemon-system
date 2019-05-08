@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 
 const Header = () => (
     <header>
-        <h1>Pokedex System !</h1>
+        <h1><Link to="/">Pokedex System !</Link></h1>
     </header>
 );
 
