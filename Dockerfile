@@ -8,6 +8,5 @@ RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs gn
 
 COPY ./pokesystem /pokesystem
 
-RUN npm install -g yarn && npm -v && yarn -v
-RUN yarn install --check-files
+RUN npm install -g yarn && npm install && yarn install
 RUN bundle install

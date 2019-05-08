@@ -16,7 +16,8 @@
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
-    "webpack": "^4.0.0"
+    "webpack": "^4.0.0",
+    "tar": ">=4.4.2"
   },
   "devDependencies": {
     "webpack-dev-server": "^3.3.1"

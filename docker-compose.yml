@@ -9,7 +9,7 @@ services:
     build: .
     command: rails s -p 3000 -b '0.0.0.0'
     volumes:
-        - "./pokesystem:/pokesystem"
+        - ./pokesystem:/pokesystem
     ports:
       - "3000:3000"
     depends_on:
