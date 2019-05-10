@@ -32,14 +32,14 @@ class Editor extends React.Component {
 
   componentDidMount() {
     axios
-      .get('/api/pokemons.json')
+      .get('/v1/pokemons.json')
       .then(response => this.setState({ pokemons: response.data }))
-      .catch(handleAjaxError);
+      .catch(error => console.log(error));
   }
 
   addPokemon(newPokemon) {
     axios
-      .post('/api/pokemons.json', newPokemon)
+      .post('/v1/pokemons.json', newPokemon)
       .then((response) => {
         success('pokemon Added!');
         const savedPokemon = response.data;

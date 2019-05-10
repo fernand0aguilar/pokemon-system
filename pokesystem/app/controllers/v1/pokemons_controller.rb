@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class V1::PokemonsController < ApplicationController
-    respond_to: json
+    respond_to? :json
 
     def index
         respond_with Pokemon.order(id: :DESC)
