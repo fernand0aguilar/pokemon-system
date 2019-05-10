@@ -12,7 +12,7 @@ export class PokemonPage extends Component {
     componentDidMount = async () => {
         const id = Number(this.props.match.params.id) - 1;            
         await this.props.getPokemons()
-            .then(response => this.setState({pokemon: response.json.pokemons[id]}));                
+            .then(response => this.setState({pokemon: response.json[id]}));                
     }
 
     render() {

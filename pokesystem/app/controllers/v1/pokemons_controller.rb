@@ -15,28 +15,25 @@ class V1::PokemonsController < ApplicationController
         secondGen = evolution_chain.evolves_to.first.evolves_to
         thirdGen = evolution_chain.evolves_to.first.evolves_to.first.evolves_to
         
-        chain = firstGen
-        
-        if firstGen.first.species.name == pokemon_species.name
-            evolution = secondGen.first.species.name
-        elsif thirdGen.first.length == 0
-            evolution = "Don't have Evolution"
-        else
+        if firstGen.first.species.name != pokemon_species.name && secondGen.first.species.name != pokemon_species.name
             evolution = firstGen.first.species.name
+        elsif firstGen.first.species.name == pokemon_species.name
+            evolution = secondGen.first.species.name
         end
 
         if evolution
             return evolution
         end
+        return "Nao Tem Evolucao"
     end
 
     def get_pokemons_from_api
-        numbers = [*1..10]
+        numbers = [*1..151]
         @pokeArr = []
         @evoArr = []
 
         numbers.each do |id|
-            pokemons = PokeApi.get(pokemon_species: id)
+            pokemon = PokeApi.get(pokemon_species: id)
             @evoArr << get_evolution_chain(pokemon)
             @pokeArr << pokemon.name
             
@@ -52,7 +49,7 @@ class V1::PokemonsController < ApplicationController
         id = 1
         for i in 0..poke.length-1
             @img_url = "https://raw.githubusercontent.com/PokeAPI/pokeapi/master/data/v2/sprites/pokemon/" + id.to_s + ".png"
-            pokemon = Pokemon.new(nome: poke[i], img: @img_url, evolution: @evoArr[i])
+            pokemon = Pokemon.new(name: poke[i], url: @img_url, evolution: @evoArr[i])
             pokemon.save
             id += 1
         end

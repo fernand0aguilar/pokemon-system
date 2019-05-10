@@ -10,3 +10,4 @@ COPY ./pokesystem /pokesystem
 
 RUN npm install -g yarn && npm install && yarn install
 RUN bundle install
+RUN rake db:create && rake db:migrate
