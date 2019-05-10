@@ -41,7 +41,7 @@ class V1::PokemonsController < ApplicationController
             @pokeArr << pokemon.name
             
             if id % 50 == 0 && id != 150
-                puts "API accepts only 100 req per minute. Sleep 30s"
+                puts "API accepts only 100 req per minute. Sleeping 30s"
                 sleep(30)
             end 
         end
