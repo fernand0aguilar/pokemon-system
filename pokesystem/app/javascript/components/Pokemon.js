@@ -9,7 +9,7 @@ const Pokemon = ({pokemon}) => (
         <img src={pokemon.url} alt={pokemon.name} ></img>
         <figcaption>{pokemon.name}</figcaption>
       </figure>
-      <p>{pokemon.name}</p>
+      <p>Evoluttion: {pokemon.evolution}</p>
     </section>
   </section>
 );

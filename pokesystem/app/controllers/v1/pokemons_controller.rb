@@ -1,38 +1,59 @@
 # frozen_string_literal: true
 
 class V1::PokemonsController < ApplicationController
-    respond_to? :json
+    skip_before_action :verify_authenticity_token
+    require 'poke-api-v2'
 
     def index
-        respond_with Pokemon.order(id: :DESC)
+        pokemons = Pokemon.all
+        get_pokemons_from_api
+        render json: pokemons
     end
 
-    def show
-        respond_with Pokemon.find(params[:id])
-    end
-    
-    def create
-        respond_with :v1, Pokemon.create(pokemon_params)
+    def get_evolution_chain(pokemon_species)
+        evolution_chain = pokemon_species.evolution_chain.get.chain
+
+        firstGen = evolution_chain.evolves_to
+        secondGen = evolution_chain.evolves_to.first.evolves_to
+        thirdGen = evolution_chain.evolves_to.first.evolves_to.first.evolves_to
+        
+        if firstGen.first.species.name != pokemon_species.name && secondGen.first.species.name != pokemon_species.name
+            evolution = firstGen.first.species.name
+        elsif firstGen.first.species.name == pokemon_species.name
+            evolution = secondGen.first.species.name
+        end
+
+        if evolution
+            return evolution
+        end
+        return "Nao Tem Evolucao"
     end
 
-    def destroy
-        respond_with Pokemon.destroy(params[:id])
-    end
-    
-    def update
-        pokemon = Pokemon.find(params['id'])
-        pokemon.update(pokemon_params)
-        respond_with Pokemon, json: pokemon
+    def get_pokemons_from_api
+        numbers = [*1..151]
+        @pokeArr = []
+        @evoArr = []
+
+        numbers.each do |id|
+            pokemon = PokeApi.get(pokemon_species: id)
+            @evoArr << get_evolution_chain(pokemon)
+            @pokeArr << pokemon.name
+            
+            if id % 50 == 0 && id != 150
+                puts "API accepts only 100 req per minute. Sleeping 30s"
+                sleep(30)
+            end 
+        end
+        create_pokemon(@pokeArr)
     end
 
-    private
-
-    def event_params
-        params.require(:pokemon).permit(
-            :id,
-            :name,
-            :url,
-            :evolution_chain,
-        ) 
-    end
+    def create_pokemon(poke)
+        id = 1
+        for i in 0..poke.length-1
+            @img_url = "https://raw.githubusercontent.com/PokeAPI/pokeapi/master/data/v2/sprites/pokemon/" + id.to_s + ".png"
+            pokemon = Pokemon.new(name: poke[i], url: @img_url, evolution: @evoArr[i])
+            pokemon.save
+            id += 1
+        end
+      end
 end
