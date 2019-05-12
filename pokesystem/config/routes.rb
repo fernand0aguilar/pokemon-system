@@ -1,14 +1,14 @@
-Rails.application.routes.draw do
-  root 'static#index'
-  
-  namespace :v1, defaults: { format: 'json'} do
-    get 'pokemons', to: 'pokemons#index'
-  end
+# frozen_string_literal: true
 
-  # Forward all requests to StaticController#index but requests
-  # must be non-Ajax (!req.xhr?) and HTML Mime type (req.format.html?).
-  # This does not include the root ("/") path.
-  get '*page', to: 'static#index', constraints: ->(req) do
-    !req.xhr? && req.format.html?
+Rails.application.routes.draw do
+  root to: redirect('/pokemons')
+
+  get 'pokemons', to: 'site#index'
+  get 'pokemons/new', to: 'site#index'
+  get 'pokemons/:id', to: 'site#index'
+  get 'pokemons/:id/edit', to: 'site#index'
+
+  namespace :api do
+    resources :pokemons, only: %i[index show create destroy update]
   end
 end

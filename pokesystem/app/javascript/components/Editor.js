@@ -3,19 +3,14 @@
 import React from 'react';
 import axios from 'axios';
 import PropTypes from 'prop-types';
-
 import { Switch } from 'react-router-dom';
 import Pokemon from './Pokemon';
 import PokemonForm from './PokemonForm';
 import PokemonList from './PokemonList';
-
-
-import { BrowserRouter } from "react-router-dom"
-
-import Header from "./Header";
-import Footer from "./Footer";
-import Routes from "./Routes";
-
+import Header from './Header';
+import PropsRoute from './PropsRoute';
+import { success } from '../helpers/notifications';
+import { handleAjaxError } from '../helpers/helpers';
 
 class Editor extends React.Component {
   constructor(props) {
@@ -32,16 +27,16 @@ class Editor extends React.Component {
 
   componentDidMount() {
     axios
-      .get('/v1/pokemons.json')
+      .get('/api/pokemons.json')
       .then(response => this.setState({ pokemons: response.data }))
-      .catch(error => console.log(error));
+      .catch(handleAjaxError);
   }
 
   addPokemon(newPokemon) {
     axios
-      .post('/v1/pokemons.json', newPokemon)
+      .post('/api/pokemons.json', newPokemon)
       .then((response) => {
-        success('pokemon Added!');
+        success('Pokemon Added!');
         const savedPokemon = response.data;
         this.setState(prevState => ({
           pokemons: [...prevState.pokemons, savedPokemon],
@@ -59,7 +54,7 @@ class Editor extends React.Component {
         .delete(`/api/pokemons/${pokemonId}.json`)
         .then((response) => {
           if (response.status === 204) {
-            success('pokemon deleted successfully');
+            success('Pokemon deleted successfully');
             const { history } = this.props;
             history.push('/pokemons');
 
@@ -75,7 +70,7 @@ class Editor extends React.Component {
     axios
       .put(`/api/pokemons/${updatedPokemon.id}.json`, updatedPokemon)
       .then(() => {
-        success('pokemon updated');
+        success('Pokemon updated');
         const { pokemons } = this.state;
         const idx = pokemons.findIndex(pokemon => pokemon.id === updatedPokemon.id);
         pokemons[idx] = updatedPokemon;
@@ -110,7 +105,7 @@ class Editor extends React.Component {
             />
             <PropsRoute
               path="/pokemons/:id"
-              component={pokemon}
+              component={Pokemon}
               pokemon={pokemon}
               onDelete={this.deletePokemon}
             />

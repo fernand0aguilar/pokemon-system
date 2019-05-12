@@ -1,22 +1,14 @@
-import React from "react";
-import { Provider } from "react-redux"
-import { Route } from 'react-router-dom'
-import configureStore from '../configureStore'
-import Editor from './Editor'
-import { BrowserRouter } from "react-router-dom"
+import React from 'react';
+import { Route } from 'react-router-dom';
+import { Alert } from '../helpers/notifications';
+import Editor from './Editor';
+import './App.css';
 
-const store = configureStore();
-
-class App extends React.Component {
-  render() {
-    return (
-      <Provider store={store}>
-      <BrowserRouter>
-        <Route path="/pokemons/:id?" component={Editor} />
-      </BrowserRouter>
-      </Provider>
-      );
-  }
-}
+const App = () => (
+  <div>
+    <Route path="/pokemons/:id?" component={Editor} />
+    <Alert stack={{ limit: 3 }} />
+  </div>
+);
 
 export default App;
