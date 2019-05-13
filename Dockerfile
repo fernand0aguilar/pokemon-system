@@ -8,6 +8,6 @@ RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs gn
 
 COPY ./pokesystem /pokesystem
 
-RUN npm install -g yarn && npm install && yarn install
+RUN npm install -g yarn && yarn install
 RUN bundle install
-RUN rake db:create && rake db:migrate
+RUN rake db:create && rake db:schema:load && rake db:seed

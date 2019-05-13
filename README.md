@@ -1,23 +1,26 @@
 # pokemon-system
+[![Build Status](https://travis-ci.com/fernand0aguilar/pokemon-system.svg?branch=master)](https://travis-ci.com/fernand0aguilar/pokemon-system)
 
 ### How to build
-clone
-cd 
 
-via docker
+* clone the repository
+
+* cd pokemon-system
+
+* run via Docker
 ```
-docker-compose up --build
+docker-compose build
+docker-compose up
 
 ```
 
-via rails local
+* run via rails local
 ```
-rake db:create
-rake db:schema:load
+cd pokesystem
 
+rake db:create && rake db:schema:load && rake db:seed
 bundle install
 yarn install
 
 rails s -p 3000
-
 ```
