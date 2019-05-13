@@ -1,29 +1,83 @@
+/* eslint-disable camelcase */
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
-import Pokemon from './Pokemon'
+class PokemonList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchTerm: '',
+    };
 
-const PokemonList = ({pokemons}) => (
-    <ul className="pokemons">
-        {
-            pokemons.map(pokemon => (
-                <li key={pokemon.id}>
-                    <Link to={`/pokemons/${pokemon.id}`}>
-                        <Pokemon pokemon={pokemon} />
-                    </Link>
-                </li>
-            ))
-        }
-    </ul>
-);
+    this.searchInput = React.createRef();
+    this.updateSearchTerm = this.updateSearchTerm.bind(this);
+  }
+
+  updateSearchTerm() {
+    this.setState({ searchTerm: this.searchInput.current.value });
+  }
+
+  matchSearchTerm(obj) {
+    const {
+      id, published, created_at, updated_at, ...rest
+    } = obj;
+    const { searchTerm } = this.state;
+
+    return Object.values(rest).some(
+      value => value.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1,
+    );
+  }
+
+  renderPokemons() {
+    const { activeId, pokemons } = this.props;
+    const filteredPokemons = pokemons
+      .filter(el => this.matchSearchTerm(el))
+      .sort((a, b) => b.id < a.id);
+
+    return filteredPokemons.map(pokemon => (
+      <li key={pokemon.id}>
+        <Link to={`/pokemons/${pokemon.id}`} className={activeId === pokemon.id ? 'active' : ''}>
+            <figure>
+              <img src={pokemon.url} alt={pokemon.id} />
+              <figcaption>{pokemon.id} - {pokemon.name}</figcaption>
+          </figure> 
+        </Link>
+      </li>
+    ));
+  }
+
+  render() {
+    return (
+      <section className="pokemonList">
+        <h2>
+        Pokemons
+          <Link to="/pokemons/new">New Pokemon</Link>
+        </h2>
+
+        <input
+          className="search"
+          placeholder="Search"
+          type="text"
+          ref={this.searchInput}
+          onKeyUp={this.updateSearchTerm}
+        />
+
+        <ul>{this.renderPokemons()}</ul>
+      </section>
+    );
+  }
+}
 
 PokemonList.propTypes = {
-    pokemons: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired,
-        url: PropTypes.string.isRequired
-    })).isRequired
-}
+  activeId: PropTypes.number,
+  pokemons: PropTypes.arrayOf(PropTypes.object),
+};
+
+PokemonList.defaultProps = {
+  activeId: undefined,
+  pokemons: [],
+};
 
 export default PokemonList;

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  pokemon_type: MyString
+  pokemon_date: 2019-01-28
+  title: MyText
+  url: MyString
+  host: MyString
+  published: false
+
+two:
+  pokemon_type: MyString
+  pokemon_date: 2019-01-28
+  title: MyText
+  url: MyString
+  host: MyString
+  published: false
