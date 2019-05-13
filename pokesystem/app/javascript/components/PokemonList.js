@@ -21,10 +21,10 @@ class PokemonList extends React.Component {
 
   matchSearchTerm(obj) {
     const {
-      id, published, created_at, updated_at, ...rest
+      id, pokemon_type, created_at, updated_at, ...rest
     } = obj;
     const { searchTerm } = this.state;
-
+    console.log(obj);
     return Object.values(rest).some(
       value => value.toLowerCase().indexOf(searchTerm.toLowerCase()) > -1,
     );
@@ -63,7 +63,6 @@ class PokemonList extends React.Component {
           ref={this.searchInput}
           onKeyUp={this.updateSearchTerm}
         />
-
         <ul>{this.renderPokemons()}</ul>
       </section>
     );

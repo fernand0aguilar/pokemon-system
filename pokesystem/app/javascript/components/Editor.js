@@ -8,6 +8,7 @@ import Pokemon from './Pokemon';
 import PokemonForm from './PokemonForm';
 import PokemonList from './PokemonList';
 import Header from './Header';
+import Footer from './Footer';
 import PropsRoute from './PropsRoute';
 import { success } from '../helpers/notifications';
 import { handleAjaxError } from '../helpers/helpers';
@@ -111,6 +112,7 @@ class Editor extends React.Component {
             />
           </Switch>
         </div>
+        <Footer />
       </div>
     );
   }
